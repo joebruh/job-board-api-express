@@ -74,7 +74,7 @@ describe("Auth API", () => {
     });
   });
 
-  describe.only("POST /api/auth/login", () => {
+  describe("POST /api/auth/login", () => {
     beforeEach(async () => {
       const bcrypt = require("bcryptjs");
       const passwordHash = await bcrypt.hash("password123", 10);
@@ -85,7 +85,7 @@ describe("Auth API", () => {
       });
     });
 
-    it.only("should log candidate in with correct credentials", async () => {
+    it("should log candidate in with correct credentials", async () => {
       const res = await request(app).post("/api/auth/login").send({
         username: "testCandidate",
         password: "password123",
