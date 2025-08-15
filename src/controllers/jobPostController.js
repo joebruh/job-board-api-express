@@ -72,7 +72,6 @@ exports.deleteJobPost = async (req, res) => {
 
     res.status(200).json({ message: "Job post deleted successfully" });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error: "Failed to delete job post" });
   }
 };
