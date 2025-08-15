@@ -3,10 +3,10 @@ const app = express();
 
 app.use(express.json());
 
-// const jobPostRoutes = require('./routes/jobPostRoutes');
-// app.use('/api/job-posts', jobPostRoutes);
-
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
+
+const jobPostRoutes = require('./routes/jobPostRoutes');
+app.use('/api/job-posts', jobPostRoutes);
 
 module.exports = app;

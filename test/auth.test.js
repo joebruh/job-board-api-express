@@ -28,17 +28,18 @@ describe("Auth API", () => {
     await User.deleteMany({});
   });
 
-  let payload = {
-    username: "testuser",
-    password: "password123",
-    role: "Candidate",
-    fullName: "test candidate",
-    email: "testcandidate@example.com",
-    phone: "0483298323",
-  };
-
   describe("POST /api/auth/register", () => {
     it("should register a new candidate", async () => {
+
+    let payload = {
+      username: "testuser",
+      password: "password123",
+      role: "Candidate",
+      fullName: "test candidate",
+      email: "testcandidate@example.com",
+      phone: "0483298323",
+    };
+
       const res = await request(app).post("/api/auth/register").send(payload);
 
       expect(res.status).to.equal(201);
@@ -83,6 +84,16 @@ describe("Auth API", () => {
         passwordHash,
         role: "Candidate",
       });
+    });
+
+    it("should not log user in with wrong details", async () => {
+      const res = await request(app).post("/api/auth/login").send({
+        username: "testCandidate",
+        password: "wrongPassword",
+      });
+
+      expect(res.status).to.equal(400);
+      expect(res.body.error).to.have.equal("Invalid username or password");
     });
 
     it("should log candidate in with correct credentials", async () => {

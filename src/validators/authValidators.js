@@ -27,3 +27,10 @@ exports.registerValidation = [
     .if(body('role').equals('Company'))
     .notEmpty().withMessage('Description is required for Companies'),
 ];
+
+exports.loginValidation = [
+  body('username')
+    .notEmpty().withMessage('Username is required'),
+  body('password')
+    .notEmpty().withMessage('Password is required'),
+]

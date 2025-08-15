@@ -19,12 +19,14 @@
   },
   "homepage": "https://github.com/joebruh/job-board-api-express#readme",
   "dependencies": {
+    "@faker-js/faker": "^9.9.0",
     "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.17.0"
+    "mongoose": "^8.17.0",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "chai": "^5.2.1",
