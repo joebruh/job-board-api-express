@@ -49,7 +49,6 @@ exports.getJobPost = async (req, res) => {
 
 exports.updateJobPost = async (req, res) => {
   try {
-    console.log("sweep");
     const jobPost = await updateJobPost(req);
 
     if (!jobPost) {

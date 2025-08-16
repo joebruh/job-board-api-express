@@ -1,14 +1,8 @@
 const Application = require("../models/Application");
-const CandidateProfile = require("../models/CandidateProfile");
-const CompanyProfile = require("../models/CompanyProfile");
 const JobPost = require("../models/JobPost");
-const User = require("../models/User");
-const slugify = require("slugify");
 
 async function sendApplication(req, res) {
   const jobPostId = req.params.id;
-
-  console.log(req.params.id);
 
   const jobPost = await JobPost.findOneAndUpdate(
     {
@@ -37,4 +31,38 @@ async function sendApplication(req, res) {
   return application;
 }
 
-module.exports = { sendApplication };
+async function getApplicationById(req, res) {
+  const applicationId = req.params.id;
+  const candidateProfileId = req.user.candidateProfile?._id || null;
+  const companyProfileId = req.user.companyProfile?._id || null;
+
+  let match = { id: applicationId };
+
+  if (candidateProfileId) {
+    match.candidateProfile = candidateProfileId;
+  }
+
+  let query = Application.findOne(match)
+    .populate("candidateProfile")
+    .populate({
+      path: "jobPost",
+      match: companyProfileId ? { companyProfile: companyProfileId } : {},
+    })
+    .select("resumeLink coverLetter status createdAt");
+
+  const application = await query;
+
+  if (!application) {
+    return null;
+  }
+
+  if (companyProfileId && !application.status) {
+    application.status = 'Viewed';
+
+    await application.save();
+  }
+
+  return application;
+}
+
+module.exports = { sendApplication, getApplicationById };

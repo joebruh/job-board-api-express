@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const applicationSchema = new mongoose.Schema({
   id: { type: Number, unique: true },
-  title: String,
-  slug: { type: String, unique: true },
-  resumeLink: { type: String },
+  resumeLink: { 
+    type: String,
+    required: true
+  },
   coverLetter: { type: String },
   createdAt: { type: Date },
-  status: { type: String },
+  status: { type: String, default: null },
   candidateProfile: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "CandidateProfile",
